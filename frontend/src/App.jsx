@@ -7,12 +7,12 @@ function App() {
   
 
   return (
-    <>
-      <h1 style={{textAlign:"center"}}>Image Generator</h1>
+    <div className='app'>
+      {/* <h1 style={{textAlign:"center"}}>Image Generator</h1>
       <ImageGenerator />
-      <hr/>
+      <hr/> */}
       <ChatGenerator />
-    </>
+    </div>
   )
 }
 
