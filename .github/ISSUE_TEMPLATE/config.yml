@@ -1,0 +1,7 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Support
+    url: https://github.com/OWNER/REPO/issues
+    about: For help or general support
+
+
