@@ -1,11 +1,12 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import ConversationDemo from "./components/AI/chat";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen dark">
-      <ConversationDemo />
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+    </Routes>
   );
 }
 
