@@ -1,7 +1,7 @@
+import "dotenv/config";
 import { google } from "@ai-sdk/google";
-import { GoogleGenerativeAIImageProviderOptions } from "@ai-sdk/google";
 import { experimental_generateImage as generateImage } from "ai";
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 
 export const generateImageWithGeminiHandler = async (
   req: Request,
