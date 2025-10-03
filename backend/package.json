@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@ai-sdk/google": "^2.0.17",
+    "@google/genai": "^1.22.0",
+    "@google/generative-ai": "^0.24.1",
     "@openrouter/ai-sdk-provider": "^1.2.0",
     "ai": "^5.0.59",
     "axios": "^1.12.2",

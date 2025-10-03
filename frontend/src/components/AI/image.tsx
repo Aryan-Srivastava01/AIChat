@@ -11,16 +11,17 @@ const models = [
     value: "hugging-face",
     provider: "hugging-face",
   },
-  {
-    name: "Gemini 2.0 Flash Image (Image Generation)",
-    value: "gemini-2.0-flash-preview-image-generation",
-    provider: "gemini",
-  },
+  // Paid models
+  // {
+  //   name: "Gemini 2.0 Flash Image (Image Generation)",
+  //   value: "gemini-2.0-flash-preview-image-generation",
+  //   provider: "gemini",
+  // },
 ];
 
 const Image = () => {
   const [prompt, setPrompt] = useState("");
-  const [imageUrl, setImageUrl] = useState(""); // store returned image
+  const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [model, setModel] = useState(models[0]);
 
