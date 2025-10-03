@@ -57,6 +57,12 @@ A full-stack web application that provides a chat interface to interact with an 
     OPENROUTER_API_KEY=your_openrouter_api_key
     ```
 
+    If you plan to use Google Generative AI image generation, add the following as well:
+
+    ```
+    GOOGLE_GENERATIVE_AI_API_KEY=your_google_genai_api_key
+    ```
+
 3.  **Frontend Setup:**
 
     ```bash
@@ -95,6 +101,25 @@ Contributions are welcome! Please follow these steps to contribute:
 5.  **Create a pull request.**
 
 Please use the provided issue and pull request templates.
+
+## Google Generative AI (optional)
+
+This project includes an endpoint that can call Google GenAI image models. To enable it:
+
+- Install the Google SDK in the backend:
+
+```bash
+cd backend
+npm install @google/genai
+```
+
+- Add `GOOGLE_GENERATIVE_AI_API_KEY` to `backend/.env` (see above).
+
+- The endpoint is exposed at `POST /api/image/gemini` and accepts JSON `{ "prompt": "your prompt" }`.
+
+- Responses will be either `{ "image": "data:image/png;base64,..." }` when the model returns inline bytes, or `{ "text": "..." }` when the model returns text parts.
+
+Note: Some Google models are gated or require billing on your Google account. If you receive 404 or permission errors, you may need to request access or switch to an Imagen model (e.g. `imagen-4.0-generate-001`).
 
 ## License
 
