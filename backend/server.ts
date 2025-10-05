@@ -1,6 +1,6 @@
 // server.js
-import "dotenv/config";
 import cors from "cors";
+import "dotenv/config";
 import express from "express";
 import chatRoutes from "./routes/chat.routes.ts";
 import imageRoutes from "./routes/image.routes.ts";
@@ -18,5 +18,5 @@ app.use("/api/image", imageRoutes);
 // Start server
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`✅ Server running on port ${PORT} by Aryan Srivastava`);
 });

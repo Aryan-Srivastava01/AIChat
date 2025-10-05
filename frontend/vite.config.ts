@@ -1,7 +1,7 @@
-import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,5 +10,14 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  server: {
+    watch: {
+      usePolling: true, // Enable polling for Docker on Windows
+      interval: 1000,   // Check for changes every 1 second
+    },
+    host: true, // Listen on all addresses (0.0.0.0)
+    strictPort: true,
+    port: 5173,
   },
 });

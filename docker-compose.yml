@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: aichat-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      # Mount source code for hot reload
+      - ./frontend:/app
+      # Use anonymous volume for node_modules to prevent host override
+      - /app/node_modules
+    env_file:
+      # Load environment variables from frontend's .env.local
+      - ./frontend/.env.local
+    depends_on:
+      - backend
+    networks:
+      - aichat-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: aichat-backend
+    ports:
+      - "5001:5001"
+    volumes:
+      # Mount source code for hot reload
+      - ./backend:/app
+      # Use anonymous volume for node_modules to prevent host override
+      - /app/node_modules
+    env_file:
+      # Load environment variables from backend's .env
+      - ./backend/.env
+    networks:
+      - aichat-network
+
+networks:
+  aichat-network:
+    driver: bridge

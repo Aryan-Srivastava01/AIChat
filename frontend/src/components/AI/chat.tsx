@@ -33,7 +33,7 @@ import { Response } from "@/components/ai-elements/response";
 import { DefaultChatTransport } from "ai";
 
 const models = [
-  { id: "x-ai/grok-4-fast:free", name: "xAI: Grok 4 Fast (free)" },
+  // { id: "x-ai/grok-4-fast:free", name: "xAI: Grok 4 Fast (free)" },
   {
     id: "deepseek/deepseek-chat-v3.1:free",
     name: "DeepSeek: DeepSeek V3.1 (free)",
@@ -42,7 +42,7 @@ const models = [
 
 const ConversationDemo = () => {
   const [text, setText] = useState<string>("");
-  const [model, setModel] = useState<string>("x-ai/grok-4-fast:free");
+  const [model, setModel] = useState<string>(models[0].id);
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({
       api: "http://localhost:5001/api/chat",

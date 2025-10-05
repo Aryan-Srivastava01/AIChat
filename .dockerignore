@@ -1,0 +1,33 @@
+# Root .dockerignore (if building from root context)
+node_modules
+**/node_modules
+**/bun.lock
+
+# Build output
+**/dist
+**/dist-ssr
+
+# Environment files
+.env
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Logs
+**/*.log
+
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+*.md
+GEMINI.md
+QWEN.md
+
+# Editor
+.vscode
+.idea
+**/.DS_Store
+

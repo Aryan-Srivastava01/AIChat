@@ -51,10 +51,11 @@ A full-stack web application that provides a chat interface to interact with an 
     npm install
     ```
 
-    Create a `.env` file in the `backend` directory and add your OpenRouter API key:
+    Create a `.env` file in the `backend` directory and add your API keys:
 
     ```
     OPENROUTER_API_KEY=your_openrouter_api_key
+    HF_API_KEY=your_hugging_face_api_key
     ```
 
     If you plan to use Google Generative AI image generation, add the following as well:
@@ -66,11 +67,55 @@ A full-stack web application that provides a chat interface to interact with an 
 3.  **Frontend Setup:**
 
     ```bash
-    cd ../aryan-chat-frontend
+    cd ../frontend
     npm install
     ```
 
 ### Running the Application
+
+#### Option 1: Using Docker (Recommended for Contributors)
+
+1.  **Prerequisites:**
+    -   Docker
+    -   Docker Compose
+
+2.  **Environment Variables:**
+    
+    **Backend:**
+    ```bash
+    cd backend
+    cp .env.example .env
+    ```
+    Edit `backend/.env` and add your API keys:
+    ```
+    OPENROUTER_API_KEY=your_openrouter_api_key
+    HF_API_KEY=your_hugging_face_api_key
+    GOOGLE_GENERATIVE_AI_API_KEY=your_google_genai_api_key
+    ```
+    
+    **Frontend:**
+    ```bash
+    cd ../frontend
+    cp .env.local.example .env.local
+    ```
+    The default values in `frontend/.env.local` should work out of the box.
+
+3.  **Build and Run:**
+    From the root directory, run:
+    ```bash
+    docker-compose up --build
+    ```
+    
+    The frontend will be available at `http://localhost:5173` and the backend at `http://localhost:5001`.
+    
+    **Note:** Changes to your code will automatically trigger hot reload in both frontend and backend.
+
+4.  **Stop the containers:**
+    ```bash
+    docker-compose down
+    ```
+
+#### Option 2: Running Locally (Without Docker)
 
 1.  **Start the backend server:**
 
@@ -84,11 +129,12 @@ A full-stack web application that provides a chat interface to interact with an 
 2.  **Start the frontend development server:**
 
     ```bash
-    cd ../aryan-chat-frontend
+    cd ../frontend
     npm run dev
     ```
 
     The frontend will be running on `http://localhost:5173`.
+
 
 ## Contributing
 
