@@ -15,28 +15,46 @@ import {
   Users,
   Image,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const menuItems = [
+    {
+      label: "Home",
+      icon: Home,
+      href: "/",
+    },
+    {
+      label: "Image",
+      icon: Image,
+      href: "/image",
+    },
+  ];
+
   return (
     // add fixed  to the nav class name to make the navbar stick to the bottom of the screen
     <div className="fixed top-6 left-0 right-0 flex justify-center z-10">
       <nav className="flex items-center justify-center space-x-4 rounded-full border bg-background p-2 shadow-lg">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          onClick={() => navigate("/")}
-          title="Home"
-        >
-          <Home className="h-5 w-5" />
-          <span className="sr-only">Home</span>
-        </Button>
-        {/* <Button variant="ghost" size="icon" className="rounded-full">
-          <Users className="h-5 w-5" />
-          <span className="sr-only">Users</span>
-        </Button> */}
+        {menuItems.map((item) => (
+          <Link
+            to={item.href}
+            key={item.label}
+            className={cn(
+              "flex items-center justify-center space-x-4 rounded-full border bg-background p-2 shadow-lg transition-all duration-300 ease-in-out hover:bg-primary/50 hover:text-primary-foreground",
+              pathname === item.href && "bg-primary text-primary-foreground hover:bg-primary"
+            )}
+          >
+            <item.icon className="h-4 w-4" />
+            {item.label}
+          </Link>
+        ))}
+        {/* Dropdown Example
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -61,27 +79,7 @@ export default function Navbar() {
               Settings
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          title="Image"
-          onClick={() => navigate("/image")}
-        >
-          <Image className="h-5 w-5" />
-          <span className="sr-only">Image</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          title="Menu"
-          onClick={() => navigate("/menu")}
-        >
-          <Menu className="h-5 w-5" />
-          <span className="sr-only">Menu</span>
-        </Button>
+        </DropdownMenu> */}
       </nav>
     </div>
   );
