@@ -7,14 +7,7 @@ import {
 import { Message, MessageContent } from "@/components/ai-elements/message";
 import {
   PromptInput,
-  PromptInputActionAddAttachments,
-  PromptInputActionMenu,
-  PromptInputActionMenuContent,
-  PromptInputActionMenuTrigger,
-  PromptInputAttachment,
-  PromptInputAttachments,
   PromptInputBody,
-  PromptInputButton,
   type PromptInputMessage,
   PromptInputModelSelect,
   PromptInputModelSelectContent,
@@ -26,24 +19,36 @@ import {
   PromptInputToolbar,
   PromptInputTools,
 } from "@/components/ai-elements/prompt-input";
-import { MessageSquare, MicIcon } from "lucide-react";
-import { useState } from "react";
-import { useChat } from "@ai-sdk/react";
 import { Response } from "@/components/ai-elements/response";
+import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import { MessageSquare } from "lucide-react";
+import { useState } from "react";
 
 const models = [
   // { id: "x-ai/grok-4-fast:free", name: "xAI: Grok 4 Fast (free)" },
   {
     id: "deepseek/deepseek-chat-v3.1:free",
     name: "DeepSeek: DeepSeek V3.1 (free)",
+    provider: "openrouter",
   },
+  // {
+  //   id: "gemini-2.5-flash",
+  //   name: "Gemini 2.5 Flash(Gemini CLI)",
+  //   provider: "gemini-cli",
+  // },
+  // {
+  //   id: "gemini-2.5-pro",
+  //   name: "Gemini 2.5 Pro(Gemini CLI)",
+  //   provider: "gemini-cli",
+  // },
 ];
 
 const ConversationDemo = () => {
   const [text, setText] = useState<string>("");
   const [model, setModel] = useState<string>(models[0].id);
-  const { messages, sendMessage, status } = useChat({
+  const [provider, setProvider] = useState<string>(models[0].provider);
+  const { messages, sendMessage, status, stop } = useChat({
     transport: new DefaultChatTransport({
       api: "http://localhost:5001/api/chat",
     }),
@@ -65,6 +70,7 @@ const ConversationDemo = () => {
       {
         body: {
           model: model,
+          provider: provider,
         },
       }
     );
@@ -72,54 +78,48 @@ const ConversationDemo = () => {
   };
 
   return (
-    <div className="max-w-7xl bg-popover w-screen min-h-screen p-6 relative rounded-lg border flex flex-col items-center justify-center">
-      {/* Loader */}
-      {}
-      <Conversation>
-        <ConversationContent>
-          {messages.length === 0 ? (
-            <ConversationEmptyState
-              icon={<MessageSquare className="size-12" />}
-              title="Start a conversation"
-              description="Type a message below to begin chatting"
-            />
-          ) : (
-            messages.map((message) => (
-              <Message from={message.role} key={message.id}>
-                <MessageContent>
-                  {message.parts.map((part, i) => {
-                    switch (part.type) {
-                      case "text": // we don't use any reasoning or tool calls in this example
-                        return (
-                          <Response key={`${message.id}-${i}`}>
-                            {part.text}
-                          </Response>
-                        );
-                      default:
-                        return null;
-                    }
-                  })}
-                </MessageContent>
-              </Message>
-            ))
-          )}
-        </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
+    <div className="w-screen min-h-screen relative rounded-lg border flex flex-col items-center justify-center pt-6">
+      <div className="h-[calc(100vh-100px)] max-w-7xl w-full bg-popover rounded-lg pb-22">
+        <Conversation className="w-full h-full">
+          <ConversationContent>
+            {messages.length === 0 ? (
+              <ConversationEmptyState
+                icon={<MessageSquare className="size-12" />}
+                title="Start a conversation"
+                description="Type a message below to begin chatting"
+              />
+            ) : (
+              messages.map((message) => (
+                <Message from={message.role} key={message.id}>
+                  <MessageContent>
+                    {message.parts.map((part, i) => {
+                      switch (part.type) {
+                        case "text": // we don't use any reasoning or tool calls in this example
+                          return (
+                            <Response key={`${message.id}-${i}`}>
+                              {part.text}
+                            </Response>
+                          );
+                        default:
+                          return null;
+                      }
+                    })}
+                  </MessageContent>
+                </Message>
+              ))
+            )}
+          </ConversationContent>
+          <ConversationScrollButton className="cursor-pointer" />
+        </Conversation>
+      </div>
 
-      {/* <form onSubmit={handleSubmit}>
-        <Input
-          value={input}
-          placeholder="Say something..."
-          onChange={(e) => setInput(e.currentTarget.value)}
-          className="mt-4 w-full max-w-2xl mx-auto relative"
-        ></Input>
-        <Button variant={"outline"} type="submit">
-          Send
-        </Button>
-      </form> */}
-
-      <PromptInput onSubmit={handleSubmit} className="mt-4" globalDrop multiple>
+      {/* prompt input */}
+      <PromptInput
+        onSubmit={handleSubmit}
+        className="fixed bottom-0 w-full max-w-7xl"
+        globalDrop
+        multiple
+      >
         <PromptInputBody>
           {/* attachments */}
           {/* <PromptInputAttachments>
@@ -166,6 +166,10 @@ const ConversationDemo = () => {
             <PromptInputModelSelect
               onValueChange={(value) => {
                 setModel(value);
+                setProvider(
+                  models.find((model) => model.id === value)?.provider ||
+                    "openrouter"
+                );
               }}
               value={model}
             >
@@ -183,7 +187,18 @@ const ConversationDemo = () => {
           </PromptInputTools>
 
           {/* submit button */}
-          <PromptInputSubmit disabled={!text && !status} status={status} />
+          <PromptInputSubmit
+            disabled={!text && !status}
+            status={status}
+            className="cursor-pointer"
+            onMouseDown={(e) => {
+              if (status === "streaming") {
+                e.preventDefault();
+                stop();
+                return;
+              }
+            }}
+          />
         </PromptInputToolbar>
       </PromptInput>
     </div>
