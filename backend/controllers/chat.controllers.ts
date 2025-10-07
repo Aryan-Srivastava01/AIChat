@@ -1,10 +1,11 @@
-import "dotenv/config";
-import { convertToModelMessages, streamText } from "ai";
-import type { Request, Response } from "express";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { convertToModelMessages, streamText } from "ai";
+import "dotenv/config";
+import type { Request, Response } from "express";
+import gemini from "../helpers/geminiCliProvider.ts";
 
 const streamChat = async (req: Request, res: Response) => {
-  const { messages, model } = req.body;
+  const { messages, model, provider } = req.body;
 
   console.log("model =", model);
 
@@ -16,16 +17,25 @@ const streamChat = async (req: Request, res: Response) => {
     apiKey: process.env.OPENROUTER_API_KEY,
   });
 
-  const chatModel = openrouter.chat(model);
+  const chatModel =
+    provider === "gemini-cli" ? gemini(model) : openrouter.chat(model);
 
   try {
+    console.log("Calling streamText...");
     const result = streamText({
       model: chatModel,
       messages: convertToModelMessages(messages),
     });
 
-    // This streams the response in the format expected by useChat
-    result.pipeUIMessageStreamToResponse(res);
+    console.log("Piping stream to response...");
+    if (provider === "gemini-cli") {
+      // Avoid UI message part IDs for gemini-cli; stream plain text
+      result.pipeTextStreamToResponse(res);
+    } else {
+      // Default path for providers compatible with UI message stream
+      result.pipeUIMessageStreamToResponse(res);
+    }
+    console.log("Stream finished and response closed.");
   } catch (error) {
     console.error("Streaming error:", error);
     if (!res.headersSent) {
