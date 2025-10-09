@@ -71,8 +71,8 @@ const Image = () => {
           AI-powered image generation
         </p>
       </div>
-      
-      {/* Content Section */}
+
+      {/* Content Section (AI Image Generator) */}
       <div
         className={cn(
           "max-w-4xl w-full bg-popover rounded-lg pt-16 p-8 h-full overflow-y-auto",
