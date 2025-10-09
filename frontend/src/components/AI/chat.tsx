@@ -26,7 +26,6 @@ import { MessageSquare } from "lucide-react";
 import { useState } from "react";
 
 const models = [
-  // { id: "x-ai/grok-4-fast:free", name: "xAI: Grok 4 Fast (free)" },
   {
     id: "deepseek/deepseek-chat-v3.1:free",
     name: "DeepSeek: DeepSeek V3.1 (free)",
@@ -78,7 +77,7 @@ const ConversationDemo = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen relative rounded-lg border flex flex-col items-center justify-center pt-6">
+    <div className="w-screen min-h-screen relative rounded-lg border flex flex-col items-center justify-center pt-12">
       <div className="h-[calc(100vh-100px)] max-w-7xl w-full bg-popover rounded-lg pb-22">
         <Conversation className="w-full h-full">
           <ConversationContent>

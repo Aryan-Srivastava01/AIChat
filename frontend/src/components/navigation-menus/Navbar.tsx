@@ -39,7 +39,7 @@ export default function Navbar() {
 
   return (
     // add fixed  to the nav class name to make the navbar stick to the bottom of the screen
-    <div className="fixed top-6 left-0 right-0 flex justify-center z-10">
+    <div className="fixed top-2 left-0 right-0 flex justify-center z-10">
       <nav className="flex items-center justify-center space-x-4 rounded-full border bg-background p-2 shadow-lg">
         {menuItems.map((item) => (
           <Link

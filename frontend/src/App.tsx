@@ -5,12 +5,12 @@ import HomePage from "./pages/HomePage";
 import ImagePage from "./pages/ImagePage";
 import Navbar from "@/components/navigation-menus/Navbar";
 import { Toaster } from "@/components/ui/sonner";
-import { SessionNavBar } from "@/components/ui/sidebar";
+import { Sidebar } from "@/components/ui/sidebar";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen max-h-screen w-screen items-center justify-center overflow-hidden">
-      <SessionNavBar />
+    <div className="flex flex-col min-h-screen w-screen items-center justify-center overflow-hidden">
+      <Sidebar />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />

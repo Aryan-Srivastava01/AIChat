@@ -77,14 +77,14 @@ const staggerVariants = {
   },
 };
 
-export function SessionNavBar() {
+export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const location = useLocation();
   const pathname = location.pathname;
 
   return (
     <motion.div
-      className={cn("sidebar left-0 z-40 h-full shrink-0 border-r fixed bg-sidebar")}
+      className={cn("sidebar left-0 top-0 z-40 h-full shrink-0 border-r fixed bg-sidebar")}
       initial={isCollapsed ? "closed" : "open"}
       animate={isCollapsed ? "closed" : "open"}
       variants={sidebarVariants}
