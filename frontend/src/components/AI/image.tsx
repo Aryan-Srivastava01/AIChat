@@ -1,12 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import axios from "axios";
+import { Copy, Download } from "lucide-react";
 import { useState } from "react";
+import ModelSelect from "../form-elements/ModelSelect";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import ModelSelect from "../form-elements/ModelSelect";
-import { cn } from "@/lib/utils";
-
-
 
 const models = [
   {
@@ -28,6 +27,7 @@ const Image = () => {
   const [loading, setLoading] = useState(false);
   const [model, setModel] = useState(models[0]);
   const [isInputVisible, setIsInputVisible] = useState(true);
+  const [isCopied, setIsCopied] = useState(false);
 
   const fetchImages = async () => {
     try {
@@ -41,9 +41,9 @@ const Image = () => {
           ? `${import.meta.env.VITE_API_BASE_URL}/api/image`
           : `${import.meta.env.VITE_API_BASE_URL}/api/image/gemini`;
       const res = await axios.post(apiUrl, {
-        prompt, // send prompt in body
+        prompt,
       });
-      setImageUrl(res.data.image); // base64 string
+      setImageUrl(res.data.image);
       setPrompt("");
     } catch (err) {
       console.error("Error fetching image:", err);
@@ -54,8 +54,50 @@ const Image = () => {
   };
 
   const handleGenerate = () => {
-    if (prompt.trim()) {
-      fetchImages();
+    if (prompt.trim()) fetchImages();
+  };
+
+  const downloadImageFromDataUrl = (dataUrl: string) => {
+    try {
+      const filename = `image-${Date.now()}.png`;
+      const byteString = atob(dataUrl.split(",")[1]);
+      const mimeString = dataUrl.split(",")[0].split(":")[1].split(";")[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++)
+        ia[i] = byteString.charCodeAt(i);
+      const blob = new Blob([ab], { type: mimeString });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Failed to download image:", err);
+    }
+  };
+
+  const copyImageToClipboard = async (dataUrl: string) => {
+    try {
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+      if (navigator.clipboard && (window as any).ClipboardItem) {
+        await navigator.clipboard.write([
+          new (window as any).ClipboardItem({ [blob.type]: blob }),
+        ]);
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        // fallback: copy data URL as text
+        await navigator.clipboard.writeText(dataUrl);
+      } else {
+        throw new Error("Clipboard API not supported");
+      }
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy image to clipboard:", err);
     }
   };
 
@@ -104,6 +146,42 @@ const Image = () => {
                       className="w-full h-full object-cover rounded-lg shadow-md transition-transform duration-300 group-hover:scale-[1.02]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute z-1 bottom-4 left-4 flex space-x-2">
+                      {/* For Copying the image (by creating a function) */}
+                      <Button
+                        onClick={() => copyImageToClipboard(imageUrl)}
+                        variant="outline"
+                        size="icon"
+                        className="bg-background hover:bg-muted/50 text-muted-foreground rounded-full p-2 cursor-pointer"
+                      >
+                        <Copy className="w-5 h-5" />
+                      </Button>
+
+                      {/* For Downloading the image (by creating a function) */}
+                      {/* <Button
+                        onClick={() => downloadImageFromDataUrl(imageUrl)}
+                        variant="outline"
+                        size="icon"
+                        className="bg-background hover:bg-muted/50 text-muted-foreground rounded-full p-2 cursor-pointer"
+                      >
+                        <Download className="w-5 h-5" />
+                      </Button> */}
+
+                      {/* For Downloading the image (by creating a button) */}
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="bg-background hover:bg-muted/50 text-muted-foreground rounded-full p-2 cursor-pointer"
+                      >
+                        <a
+                          href={imageUrl}
+                          // target="_blank"
+                          download={`image-${Date.now()}.png`}
+                        >
+                          <Download className="w-5 h-5" />
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 ) : (
                   <div className="text-center py-12">

@@ -20,15 +20,57 @@ import {
   PromptInputTools,
 } from "@/components/ai-elements/prompt-input";
 import { Response } from "@/components/ai-elements/response";
+import { cn } from "@/lib/utils";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { MessageSquare } from "lucide-react";
-import { useState } from "react";
+import { CheckIcon, CopyIcon, MessageSquare } from "lucide-react";
+import { Fragment, useState } from "react";
+import { Action, Actions } from "../ai-elements/actions";
 
 const models = [
   {
-    id: "deepseek/deepseek-chat-v3.1:free",
+    name: "Z.AI: GLM 4.5 Air (free)",
+    id: "z-ai/glm-4.5-air:free",
+    provider: "openrouter",
+  },
+  {
     name: "DeepSeek: DeepSeek V3.1 (free)",
+    id: "deepseek/deepseek-chat-v3.1:free",
+    provider: "openrouter",
+  },
+  {
+    name: "Tongyi DeepResearch 30B A3B (free)",
+    id: "alibaba/tongyi-deepresearch-30b-a3b:free",
+    provider: "openrouter",
+  },
+  {
+    name: "Meituan: LongCat Flash Chat (free)",
+    id: "meituan/longcat-flash-chat:free",
+    provider: "openrouter",
+  },
+  {
+    name: "NVIDIA: Nemotron Nano 9B V2 (free)",
+    id: "nvidia/nemotron-nano-9b-v2:free",
+    provider: "openrouter",
+  },
+  {
+    name: "OpenAI: gpt-oss-20b (free)",
+    id: "openai/gpt-oss-20b:free",
+    provider: "openrouter",
+  },
+  {
+    name: "Qwen: Qwen3 Coder 480B A35B (free)",
+    id: "qwen/qwen3-coder:free",
+    provider: "openrouter",
+  },
+  {
+    name: "MoonshotAI: Kimi K2 0711 (free)",
+    id: "moonshotai/kimi-k2:free",
+    provider: "openrouter",
+  },
+  {
+    name: "Venice: Uncensored (free)",
+    id: "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
     provider: "openrouter",
   },
   // {
@@ -52,6 +94,7 @@ const ConversationDemo = () => {
       api: "http://localhost:5001/api/chat",
     }),
   });
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const handleSubmit = (message: PromptInputMessage) => {
     const hasText = Boolean(message.text);
@@ -76,6 +119,14 @@ const ConversationDemo = () => {
     setText("");
   };
 
+  const handleCopyText = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
+  };
+
   return (
     <div className="w-screen min-h-screen relative rounded-lg border flex flex-col items-center justify-center pt-12">
       <div className="h-[calc(100vh-100px)] max-w-7xl w-full bg-popover rounded-lg pb-22">
@@ -95,9 +146,39 @@ const ConversationDemo = () => {
                       switch (part.type) {
                         case "text": // we don't use any reasoning or tool calls in this example
                           return (
-                            <Response key={`${message.id}-${i}`}>
-                              {part.text}
-                            </Response>
+                            <Fragment key={`${message.id}-${i}`}>
+                              <Response>{part.text}</Response>
+                              {/* Actions like retry and copy */}
+                              {message.role === "assistant" && (
+                                <Actions>
+                                  {/* <Action onClick={() => stop()} label="Retry">
+                                    <RefreshCcwIcon className="size-3" />
+                                  </Action> */}
+                                  <Action
+                                    onClick={() => handleCopyText(part.text)}
+                                    label="Copy"
+                                    className={cn(
+                                      "cursor-pointer rounded-full w-[10%] px-2 py-1 hover:scale-105 transition-all duration-300 ease-in-out font-bold",
+                                      isCopied
+                                        ? "bg-chart-7 text-chart-6 rounded-full border border-chart-6 hover:bg-chart-7 hover:text-chart-6"
+                                        : "hover:bg-card" 
+                                    )}
+                                  >
+                                    {isCopied ? (
+                                      <span className="text-xs flex gap-1 items-center justify-center">
+                                        <CheckIcon className="size-3" />
+                                        Copied
+                                      </span>
+                                    ) : (
+                                      <span className="w-full text-xs flex gap-1 items-center justify-center">
+                                        <CopyIcon className="size-3" />
+                                        Copy
+                                      </span>
+                                    )}
+                                  </Action>
+                                </Actions>
+                              )}
+                            </Fragment>
                           );
                         default:
                           return null;
