@@ -46,8 +46,9 @@ export default function Navbar() {
             to={item.href}
             key={item.label}
             className={cn(
-              "flex items-center justify-center space-x-4 rounded-full border bg-background p-2 shadow-lg transition-all duration-300 ease-in-out hover:bg-primary/50 hover:text-primary-foreground",
-              pathname === item.href && "bg-primary text-primary-foreground hover:bg-primary"
+              "flex items-center justify-center space-x-4 rounded-full bg-background p-2 shadow-lg transition-all duration-300 ease-in-out hover:bg-primary/50 hover:text-primary-foreground",
+              pathname === item.href &&
+                "bg-primary text-primary-foreground hover:bg-primary"
             )}
           >
             <item.icon className="h-4 w-4" />
