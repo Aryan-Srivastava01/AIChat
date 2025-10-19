@@ -12,6 +12,9 @@
   "dependencies": {
     "@ai-sdk/openai": "^2.0.42",
     "@ai-sdk/react": "^2.0.59",
+    "@clerk/clerk-react": "^5.53.2",
+    "@clerk/react-router": "^2.1.4",
+    "@clerk/themes": "^2.4.28",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -36,11 +39,13 @@
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.544.0",
+    "motion": "^12.23.24",
     "nanoid": "^5.1.6",
     "next-themes": "^0.4.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-resizable-panels": "^3.0.6",
+    "react-router": "^7.9.4",
     "react-router-dom": "^7.9.3",
     "react-syntax-highlighter": "^15.6.6",
     "sonner": "^2.0.7",
@@ -49,7 +54,8 @@
     "tailwindcss": "^4.1.13",
     "tokenlens": "^1.3.1",
     "use-stick-to-bottom": "^1.1.1",
-    "zod": "^4.1.11"
+    "zod": "^4.1.11",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

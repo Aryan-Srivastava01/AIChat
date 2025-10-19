@@ -1,55 +1,61 @@
-import { useEffect, useRef, useState, useCallback } from "react"
-import { flushSync } from "react-dom"
-
-import { Moon, Sun } from "lucide-react"
-
-import { motion, AnimatePresence } from "framer-motion"
-
-import { cn } from "@/lib/utils"
+import { useEffect, useRef, useState, useCallback } from "react";
+import { flushSync } from "react-dom";
+import { Moon, Sun } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/hooks/useTheme";
 
 type AnimatedThemeTogglerProps = {
-  className?: string
-}
+  className?: string;
+};
 
-export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) => {
-  const buttonRef = useRef<HTMLButtonElement>(null)
+export const AnimatedThemeToggler = ({
+  className,
+}: AnimatedThemeTogglerProps) => {
+  const setTheme = useTheme((state) => state.setTheme);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [darkMode, setDarkMode] = useState(() =>
     typeof window !== "undefined"
       ? document.documentElement.classList.contains("dark")
       : false
-  )
+  );
 
   useEffect(() => {
-    const syncTheme = () =>
-      setDarkMode(document.documentElement.classList.contains("dark"))
+    const syncTheme = () => {
+      setDarkMode(document.documentElement.classList.contains("dark"));
+      setTheme(
+        document.documentElement.classList.contains("dark") ? "dark" : "light"
+      );
+    };
 
-    const observer = new MutationObserver(syncTheme)
+    const observer = new MutationObserver(syncTheme);
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
-    })
-    return () => observer.disconnect()
-  }, [])
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const onToggle = useCallback(async () => {
-    if (!buttonRef.current) return
+    if (!buttonRef.current) return;
 
     await document.startViewTransition(() => {
       flushSync(() => {
-        const toggled = !darkMode
-        setDarkMode(toggled)
-        document.documentElement.classList.toggle("dark", toggled)
-        localStorage.setItem("theme", toggled ? "dark" : "light")
-      })
-    }).ready
+        const toggled = !darkMode;
+        setDarkMode(toggled);
+        document.documentElement.classList.toggle("dark", toggled);
+        localStorage.setItem("theme", toggled ? "dark" : "light");
+      });
+    }).ready;
 
-    const { left, top, width, height } = buttonRef.current.getBoundingClientRect()
-    const centerX = left + width / 2
-    const centerY = top + height / 2
+    const { left, top, width, height } =
+      buttonRef.current.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
     const maxDistance = Math.hypot(
       Math.max(centerX, window.innerWidth - centerX),
       Math.max(centerY, window.innerHeight - centerY)
-    )
+    );
 
     document.documentElement.animate(
       {
@@ -63,8 +69,8 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
         easing: "ease-in-out",
         pseudoElement: "::view-transition-new(root)",
       }
-    )
-  }, [darkMode])
+    );
+  }, [darkMode]);
 
   return (
     <button
@@ -87,7 +93,7 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
             transition={{ duration: 0.33 }}
             className="text-white"
           >
-            <Sun />
+            <Sun className="size-7.5" />
           </motion.span>
         ) : (
           <motion.span
@@ -98,10 +104,10 @@ export const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) =
             transition={{ duration: 0.33 }}
             className="text-black"
           >
-            <Moon />
+            <Moon className="size-7.5" />
           </motion.span>
         )}
       </AnimatePresence>
     </button>
-  )
-}
+  );
+};

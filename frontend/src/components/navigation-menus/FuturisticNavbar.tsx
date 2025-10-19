@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Home, Image } from "lucide-react";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth, useClerk } from "@clerk/clerk-react";
 
 interface NavItem {
   id: number;
@@ -23,8 +24,10 @@ const items: NavItem[] = [
   // { id: 5, icon: <Settings size={24} />, label: "Settings", href: "/settings" },
 ];
 
-const LumaBar = () => {
+const FuturisticNavbar = () => {
   const navigate = useNavigate();
+  const { isSignedIn } = useAuth();
+  const clerk = useClerk();
   const location = useLocation();
   const pathname = location.pathname;
   const [active, setActive] = useState(
@@ -67,7 +70,11 @@ const LumaBar = () => {
               <motion.button
                 onClick={() => {
                   setActive(index);
-                  navigate(item.href);
+                  if (isSignedIn) {
+                    navigate(item.href);
+                  } else {
+                    clerk.openSignIn();
+                  }
                 }}
                 whileHover={{ scale: isActive ? 1.6 : 1.2 }}
                 animate={{ scale: isActive ? 1.4 : 1 }}
@@ -91,4 +98,4 @@ const LumaBar = () => {
   );
 };
 
-export default LumaBar;
+export default FuturisticNavbar;

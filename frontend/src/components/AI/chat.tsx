@@ -128,8 +128,8 @@ const ConversationDemo = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen relative rounded-lg border flex flex-col items-center justify-center pt-12">
-      <div className="h-[calc(100vh-100px)] max-w-7xl w-full bg-popover rounded-lg pb-22">
+    <div className="w-screen min-h-screen relative rounded-lg flex flex-col items-center justify-start px-2 sm:px-0">
+      <div className="h-[calc(100vh-100px)] max-w-lg sm:max-w-xl lg:max-w-4xl xl:max-w-7xl w-full bg-popover rounded-lg pb-22">
         <Conversation className="w-full h-full">
           <ConversationContent>
             {messages.length === 0 ? (
@@ -161,7 +161,7 @@ const ConversationDemo = () => {
                                       "cursor-pointer rounded-full w-[10%] px-2 py-1 hover:scale-105 transition-all duration-300 ease-in-out font-bold",
                                       isCopied
                                         ? "bg-chart-7 text-chart-6 rounded-full border border-chart-6 hover:bg-chart-7 hover:text-chart-6"
-                                        : "hover:bg-card" 
+                                        : "hover:bg-card"
                                     )}
                                   >
                                     {isCopied ? (
@@ -194,38 +194,40 @@ const ConversationDemo = () => {
       </div>
 
       {/* prompt input */}
-      <PromptInput
-        onSubmit={handleSubmit}
-        className="fixed bottom-0 w-full max-w-7xl"
-        globalDrop
-        multiple
-      >
-        <PromptInputBody>
-          {/* attachments */}
-          {/* <PromptInputAttachments>
+      <div className="fixed bottom-0 w-full max-w-lg sm:max-w-xl lg:max-w-4xl xl:max-w-7xl px-2 sm:px-0">
+        <PromptInput
+          onSubmit={handleSubmit}
+          className="bg-sidebar rounded-lg"
+          globalDrop
+          multiple
+        >
+          <PromptInputBody>
+            {/* attachments */}
+            {/* <PromptInputAttachments>
             {(attachment) => <PromptInputAttachment data={attachment} />}
           </PromptInputAttachments> */}
 
-          {/* textarea */}
-          <PromptInputTextarea
-            onChange={(e) => setText(e.target.value)}
-            value={text}
-          />
-        </PromptInputBody>
+            {/* textarea */}
+            <PromptInputTextarea
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+              className="placeholder:text-muted-foreground/30!"
+            />
+          </PromptInputBody>
 
-        {/* toolbar */}
-        <PromptInputToolbar>
-          <PromptInputTools>
-            {/* add attachments button */}
-            {/* <PromptInputActionMenu>
+          {/* toolbar */}
+          <PromptInputToolbar>
+            <PromptInputTools>
+              {/* add attachments button */}
+              {/* <PromptInputActionMenu>
               <PromptInputActionMenuTrigger />
               <PromptInputActionMenuContent>
                 <PromptInputActionAddAttachments />
               </PromptInputActionMenuContent>
             </PromptInputActionMenu> */}
 
-            {/* microphone button */}
-            {/* <PromptInputButton
+              {/* microphone button */}
+              {/* <PromptInputButton
               onClick={() => setUseMicrophone(!useMicrophone)}
               variant={useMicrophone ? "default" : "ghost"}
             >
@@ -233,8 +235,8 @@ const ConversationDemo = () => {
               <span className="sr-only">Microphone</span>
             </PromptInputButton> */}
 
-            {/* web search button */}
-            {/* <PromptInputButton
+              {/* web search button */}
+              {/* <PromptInputButton
               onClick={() => setUseWebSearch(!useWebSearch)}
               variant={useWebSearch ? "default" : "ghost"}
             >
@@ -242,45 +244,46 @@ const ConversationDemo = () => {
               <span>Search</span>
             </PromptInputButton> */}
 
-            {/* model select */}
-            <PromptInputModelSelect
-              onValueChange={(value) => {
-                setModel(value);
-                setProvider(
-                  models.find((model) => model.id === value)?.provider ||
-                    "openrouter"
-                );
-              }}
-              value={model}
-            >
-              <PromptInputModelSelectTrigger>
-                <PromptInputModelSelectValue />
-              </PromptInputModelSelectTrigger>
-              <PromptInputModelSelectContent>
-                {models.map((model) => (
-                  <PromptInputModelSelectItem key={model.id} value={model.id}>
-                    {model.name}
-                  </PromptInputModelSelectItem>
-                ))}
-              </PromptInputModelSelectContent>
-            </PromptInputModelSelect>
-          </PromptInputTools>
+              {/* model select */}
+              <PromptInputModelSelect
+                onValueChange={(value) => {
+                  setModel(value);
+                  setProvider(
+                    models.find((model) => model.id === value)?.provider ||
+                      "openrouter"
+                  );
+                }}
+                value={model}
+              >
+                <PromptInputModelSelectTrigger>
+                  <PromptInputModelSelectValue />
+                </PromptInputModelSelectTrigger>
+                <PromptInputModelSelectContent>
+                  {models.map((model) => (
+                    <PromptInputModelSelectItem key={model.id} value={model.id}>
+                      {model.name}
+                    </PromptInputModelSelectItem>
+                  ))}
+                </PromptInputModelSelectContent>
+              </PromptInputModelSelect>
+            </PromptInputTools>
 
-          {/* submit button */}
-          <PromptInputSubmit
-            disabled={!text && !status}
-            status={status}
-            className="cursor-pointer"
-            onMouseDown={(e) => {
-              if (status === "streaming") {
-                e.preventDefault();
-                stop();
-                return;
-              }
-            }}
-          />
-        </PromptInputToolbar>
-      </PromptInput>
+            {/* submit button */}
+            <PromptInputSubmit
+              disabled={!text && !status}
+              status={status}
+              className="cursor-pointer"
+              onMouseDown={(e) => {
+                if (status === "streaming") {
+                  e.preventDefault();
+                  stop();
+                  return;
+                }
+              }}
+            />
+          </PromptInputToolbar>
+        </PromptInput>
+      </div>
     </div>
   );
 };
