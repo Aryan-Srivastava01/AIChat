@@ -34,10 +34,14 @@ app.use((err: any, req: any, res: any, next: any) => {
   const status = err?.status || 500;
   const message = err?.message || "Internal Server Error";
   res.status(status).json({ error: message });
-}); 
-
-// Start server
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT} by Aryan Srivastava`);
 });
+
+// Start server (only when running locally / in development)
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT} by Aryan Srivastava`);
+  });
+}
+
+export default app;

@@ -7,10 +7,12 @@ import { useTheme } from "@/hooks/useTheme";
 
 type AnimatedThemeTogglerProps = {
   className?: string;
+  barType?: "sidebar" | "navbar";
 };
 
 export const AnimatedThemeToggler = ({
   className,
+  barType,
 }: AnimatedThemeTogglerProps) => {
   const setTheme = useTheme((state) => state.setTheme);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -93,7 +95,9 @@ export const AnimatedThemeToggler = ({
             transition={{ duration: 0.33 }}
             className="text-white"
           >
-            <Sun className="size-7.5" />
+            <Sun
+              className={cn("size-7.5", barType === "sidebar" && "size-5")}
+            />
           </motion.span>
         ) : (
           <motion.span
@@ -104,7 +108,9 @@ export const AnimatedThemeToggler = ({
             transition={{ duration: 0.33 }}
             className="text-black"
           >
-            <Moon className="size-7.5" />
+            <Moon
+              className={cn("size-7.5", barType === "sidebar" && "size-5")}
+            />
           </motion.span>
         )}
       </AnimatePresence>

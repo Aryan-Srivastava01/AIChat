@@ -180,7 +180,8 @@ FILE STRUCTURE:
 Return an object with two keys: 'files' (array of file objects with 'path', 'content', 'language') and 'commands' (array of command strings to run in order).`;
 
     const { object } = await generateObject({
-      model: gemini(model),
+      // model: gemini(model),
+      model: openrouter.chat("tngtech/deepseek-r1t2-chimera:free"),
       schema: filesWithCommandsSchema as z.ZodTypeAny,
       messages: messages,
       system: systemPrompt,

@@ -5,13 +5,16 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.ts"
+    "dev": "nodemon server.ts",
+    "build": "tsc -p tsconfig.json",
+    "vercel-build": "npm run build",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "serverless-http": "^3.0.0",
     "@ai-sdk/google": "^2.0.23",
     "@clerk/express": "^1.7.41",
     "@google/genai": "^1.22.0",
