@@ -1,6 +1,6 @@
 import { Router } from "express";
-import generateImageHandler from "../controllers/image.controller.ts";
-import { generateImageWithGeminiHandler } from "../controllers/gemini-image-gen.controller.ts";
+import generateImageHandler from "../controllers/image.controller.js";
+import { generateImageWithGeminiHandler } from "../controllers/gemini-image-gen.controller.js";
 
 const router = Router();
 
