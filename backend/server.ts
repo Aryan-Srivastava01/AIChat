@@ -37,11 +37,10 @@ app.use((err: any, req: any, res: any, next: any) => {
 });
 
 // Start server (only when running locally / in development)
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 5001;
-  app.listen(PORT, () => {
-    console.log(`✅ Server running on port ${PORT} by Aryan Srivastava`);
-  });
-}
+
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT} by Aryan Srivastava`);
+});
 
 export default app;
