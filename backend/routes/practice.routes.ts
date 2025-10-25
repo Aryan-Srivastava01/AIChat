@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getAuth, clerkClient } from "@clerk/express";
-import { authMiddleware } from "../middlewares/auth.middleware.ts";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 

@@ -2,7 +2,7 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { convertToModelMessages, streamText } from "ai";
 import "dotenv/config";
 import type { Request, Response } from "express";
-import gemini from "../helpers/geminiCliProvider.ts";
+import gemini from "../helpers/geminiCliProvider.js";
 
 const streamChat = async (req: Request, res: Response) => {
   const { messages, model, provider } = req.body;

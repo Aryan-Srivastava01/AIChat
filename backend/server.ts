@@ -3,10 +3,10 @@ import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
-import chatRoutes from "./routes/chat.routes.ts";
-import codeGenRoutes from "./routes/code-gen.routes.ts";
-import imageRoutes from "./routes/image.routes.ts";
-import practiceRoutes from "./routes/practice.routes.ts";
+import chatRoutes from "./routes/chat.routes.js";
+import codeGenRoutes from "./routes/code-gen.routes.js";
+import imageRoutes from "./routes/image.routes.js";
+import practiceRoutes from "./routes/practice.routes.js";
 
 const app = express();
 
