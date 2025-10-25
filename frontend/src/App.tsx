@@ -11,8 +11,24 @@ import PracticePage from "./pages/PracticePage";
 import PricingPage from "./pages/PricingPage";
 import SignInPage from "./pages/SignInPage";
 import FloatingNavBar from "@/components/navigation-menus/FloatingNavBar";
+import AppBuilderPage from "./pages/AppBuilderPage";
+import CodeGenPage from "./pages/CodeGenPage";
+import { useEffect, useState } from "react";
+import { WebContainer } from "@webcontainer/api";
+import AppBuilderPageV2 from "./pages/AppBuilderPageV2";
 
 function App() {
+  const [webContainer, setWebContainer] = useState<WebContainer | null>(null);
+
+  // Booting web container instance
+  useEffect(() => {
+    const bootWebContainer = async () => {
+      const webcontainerInstance = await WebContainer.boot();
+      setWebContainer(webcontainerInstance);
+    };
+    bootWebContainer();
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen w-screen items-center justify-center overflow-hidden">
       <Sidebar className="hidden md:block" />
@@ -41,6 +57,30 @@ function App() {
           element={
             <AuthProvider>
               <PricingPage />
+            </AuthProvider>
+          }
+        />
+        <Route
+          path="/app-builder"
+          element={
+            <AuthProvider>
+              <AppBuilderPage webContainer={webContainer} />
+            </AuthProvider>
+          }
+        />
+        <Route
+          path="/code-gen"
+          element={
+            <AuthProvider>
+              <CodeGenPage />
+            </AuthProvider>
+          }
+        />
+        <Route
+          path="/app-builder-v2"
+          element={
+            <AuthProvider>
+              <AppBuilderPageV2 webContainer={webContainer} />
             </AuthProvider>
           }
         />

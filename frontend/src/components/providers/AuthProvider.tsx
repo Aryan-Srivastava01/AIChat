@@ -1,6 +1,7 @@
 import { useAuth } from "@clerk/clerk-react";
 import { ReactNode, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Loader from "@/components/loaders/Loader";
 
 type Props = {
   children: ReactNode;
@@ -22,7 +23,7 @@ const AuthProvider = ({ children }: Props) => {
   if (!isLoaded) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
-        Loading...
+        <Loader />
       </div>
     );
   }

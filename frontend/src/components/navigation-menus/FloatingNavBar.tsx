@@ -27,6 +27,8 @@ const FloatingNavBar = () => {
     { label: "Home", href: "/" },
     { label: "Image", href: "/image" },
     { label: "Pricing", href: "/pricing" },
+    { label: "App Builder", href: "/app-builder" },
+    { label: "App Builder V2", href: "/app-builder-v2" },
   ];
 
   const handleNavigate = (href: string) => {

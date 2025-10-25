@@ -4,6 +4,7 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 import chatRoutes from "./routes/chat.routes.ts";
+import codeGenRoutes from "./routes/code-gen.routes.ts";
 import imageRoutes from "./routes/image.routes.ts";
 import practiceRoutes from "./routes/practice.routes.ts";
 
@@ -24,6 +25,7 @@ app.use(clerkMiddleware());
 app.use("/practice", practiceRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/image", imageRoutes);
+app.use("/api/generate-code", codeGenRoutes);
 
 // error handling middleware
 app.use((err: any, req: any, res: any, next: any) => {
