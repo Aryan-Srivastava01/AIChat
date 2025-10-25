@@ -1,0 +1,71 @@
+export default function languageFromPath(path: string): string {
+  const extension = path.split(".").pop();
+  switch (extension) {
+    case "ts":
+      return "typescript";
+    case "tsx":
+      return "typescript";
+    case "js":
+      return "javascript";
+    case "jsx":
+      return "jsx";
+    case "css":
+      return "css";
+    case "scss":
+      return "scss";
+    case "html":
+      return "html";
+    case "md":
+      return "markdown";
+    case "json":
+      return "json";
+    case "yaml":
+      return "yaml";
+    case "yml":
+      return "yaml";
+    case "toml":
+      return "toml";
+    case "ini":
+      return "ini";
+    case "env":
+      return "env";
+    case "sh":
+      return "shell";
+    case "bash":
+      return "shell";
+    case "zsh":
+      return "shell";
+    case "fish":
+      return "shell";
+    case "powershell":
+      return "shell";
+    case "cmd":
+      return "shell";
+    case "bat":
+      return "shell";
+    case "ps1":
+      return "shell";
+    case "psd1":
+      return "shell";
+    case "psm1":
+      return "shell";
+    case "pssc":
+      return "shell";
+    case "psscx":
+      return "shell";
+    case "psscy":
+      return "shell";
+    case "psscz":
+      return "shell";
+    case "pssc0":
+      return "shell";
+    case "pssc1":
+      return "shell";
+    case "pssc2":
+      return "shell";
+    case "pssc3":
+      return "shell";
+    default:
+      return "typescript";
+  }
+}
