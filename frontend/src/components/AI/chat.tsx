@@ -85,7 +85,8 @@ const models = [
   // },
 ];
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api/chat";
+  `${import.meta.env.VITE_API_BASE_URL}/api/chat` ||
+  "http://localhost:5001/api/chat";
 
 const ConversationDemo = () => {
   const [text, setText] = useState<string>("");
