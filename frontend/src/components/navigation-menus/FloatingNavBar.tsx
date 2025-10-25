@@ -27,8 +27,8 @@ const FloatingNavBar = () => {
     { label: "Home", href: "/" },
     { label: "Image", href: "/image" },
     { label: "Pricing", href: "/pricing" },
-    { label: "App Builder", href: "/app-builder" },
-    { label: "App Builder V2", href: "/app-builder-v2" },
+    // { label: "App Builder", href: "/app-builder" },
+    { label: "App Builder", href: "/app-builder-v2" },
   ];
 
   const handleNavigate = (href: string) => {
@@ -105,7 +105,7 @@ const FloatingNavBar = () => {
           transition={{ duration: 0.3, delay: 0.2 }}
           whileHover={{ scale: 1.05 }}
         >
-          <AnimatedThemeToggler />
+          <AnimatedThemeToggler barType="navbar" />
           <SignedOut>
             <Button
               className="cursor-pointer"
@@ -187,7 +187,7 @@ const FloatingNavBar = () => {
                 exit={{ opacity: 0, y: 20 }}
                 className="flex flex-col items-start gap-2 justify-center"
               >
-                <AnimatedThemeToggler />
+                <AnimatedThemeToggler barType="navbar" />
                 <SignedOut>
                   <Button
                     className="cursor-pointer w-full h-full"

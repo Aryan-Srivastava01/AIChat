@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 
 import ImagePage from "./pages/ImagePage";
 // import Navbar from "@/components/navigation-menus/Navbar";
-import { Sidebar } from "@/components/ui/sidebar";
+import { SideBar } from "@/components/sidebars/sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "./components/providers/AuthProvider";
 import PracticePage from "./pages/PracticePage";
@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen w-screen items-center justify-center overflow-hidden">
-      <Sidebar className="hidden md:block" />
+      <SideBar className="hidden md:block" />
       <FloatingNavBar />
       {/* <Navbar /> */}
       <Routes>
@@ -60,22 +60,22 @@ function App() {
             </AuthProvider>
           }
         />
-        <Route
+        {/* <Route
           path="/app-builder"
           element={
             <AuthProvider>
               <AppBuilderPage webContainer={webContainer} />
             </AuthProvider>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/code-gen"
           element={
             <AuthProvider>
               <CodeGenPage />
             </AuthProvider>
           }
-        />
+        /> */}
         <Route
           path="/app-builder-v2"
           element={
