@@ -8,7 +8,7 @@ import {
   getSystemPrompt,
   nodeBasePrompt,
   reactBasePrompt,
-} from "../lib/prompts.ts";
+} from "../lib/prompts.js";
 
 // OAuth authentication (recommended)
 const gemini = createGeminiProvider({

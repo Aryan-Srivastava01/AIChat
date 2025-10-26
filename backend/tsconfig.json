@@ -11,8 +11,8 @@
     "outDir": "./dist",
     "rootDir": "./",
     "allowSyntheticDefaultImports": true,
-    "noEmit": true,
-    "allowImportingTsExtensions": true
+    "noEmit": false,
+    "allowImportingTsExtensions": false
   },
   "ts-node": {
     "esm": true,

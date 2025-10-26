@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 
 import ImagePage from "./pages/ImagePage";
 // import Navbar from "@/components/navigation-menus/Navbar";
-import { SideBar } from "@/components/sidebars/sidebar";
+import { SideBar } from "@/components/sidebars/SideBar";
 import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "./components/providers/AuthProvider";
 import PracticePage from "./pages/PracticePage";

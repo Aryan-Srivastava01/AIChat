@@ -84,6 +84,9 @@ const models = [
   //   provider: "gemini-cli",
   // },
 ];
+const API_BASE_URL =
+  `${import.meta.env.VITE_API_BASE_URL}/api/chat` ||
+  "http://localhost:5001/api/chat";
 
 const ConversationDemo = () => {
   const [text, setText] = useState<string>("");
@@ -91,7 +94,7 @@ const ConversationDemo = () => {
   const [provider, setProvider] = useState<string>(models[0].provider);
   const { messages, sendMessage, status, stop } = useChat({
     transport: new DefaultChatTransport({
-      api: "http://localhost:5001/api/chat",
+      api: API_BASE_URL,
     }),
   });
   const [isCopied, setIsCopied] = useState<boolean>(false);

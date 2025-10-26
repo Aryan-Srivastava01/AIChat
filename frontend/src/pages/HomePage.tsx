@@ -1,4 +1,4 @@
-import ConversationDemo from "../components/ai/chat";
+import ConversationDemo from "@/components/AI/chat";
 
 const HomePage = () => {
   return (

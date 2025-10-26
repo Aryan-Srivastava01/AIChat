@@ -4,7 +4,7 @@ import {
   generateProjectFiles,
   generateProjectWithGenerateText,
   generateTemplatePrompts,
-} from "../controllers/code-gen.controller.ts";
+} from "../controllers/code-gen.controller.js";
 
 const router = Router();
 

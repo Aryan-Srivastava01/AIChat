@@ -1,5 +1,5 @@
 import { Router } from "express";
-import streamChat from "../controllers/chat.controller.ts";
+import streamChat from "../controllers/chat.controller.js";
 
 const router = Router();
 
